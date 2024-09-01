@@ -1,3 +1,9 @@
+## Overview
+
+   The Supply Chain Optimizer is a dynamic system designed to minimize distribution costs for a retail company, ensuring efficient product delivery from a central warehouse to various retail stores. It operates in a fast-changing environment where transportation costs fluctuate based on real-time market conditions. The optimizer handles multiple delivery routes, dynamic costs, and data retrieval variability from third-party APIs.
+
+
+
 ## Setup and Installation
 
 1. **Clone the Repository**:
