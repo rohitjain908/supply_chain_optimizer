@@ -41,3 +41,69 @@
    
    ```bash
    python app.py
+
+
+## Testing the Solution
+
+1. **Start the Server**:
+   - Ensure the server is running by using the following command:
+     
+     ```bash
+     python app.py
+     ```
+
+2. **Call the APIs in Sequence**:
+
+   - **Step 1**: Call the `fetch_stores` API to fetch and set up stores data.
+     
+      **NOTE**: Keep calling this API until it returns a success message.
+       
+     ```bash
+     curl http://127.0.0.1:5000/fetch_stores
+     ```
+     Example success response:
+     
+     ```json
+     {
+       "message": "Stores data fetched and set up successfully"
+     }
+     ```
+
+   - **Step 2**: Call the `fetch_route_cost` API to fetch and set up route cost data.
+     
+     **NOTE**: Ensure this API returns a success message before proceeding.
+       
+     ```bash
+     curl http://127.0.0.1:5000/fetch_route_cost
+     ```
+     
+     Example success response:
+     
+     ```json
+     {
+       "message": "Route costs fetched and set up successfully"
+     }
+     ```
+
+   - **Step 3**: Call the `optimal_cost` API to calculate the optimal distribution cost.
+     
+     **NOTE**: Only call this API after the previous two APIs have successfully executed.
+       
+     ```bash
+     curl http://127.0.0.1:5000/optimal_cost
+     ```
+     
+     Example success response:
+     
+     ```json
+     {
+       "optimal_cost": 4064.51
+     }
+     ```
+
+     If the system cannot deliver to all stores using the available routes, you might get an error response like this:
+     ```json
+     {
+       "error": "From the given routes warehouse can't send items to all stores."
+     }
+     ```
