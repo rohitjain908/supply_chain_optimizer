@@ -107,3 +107,12 @@
        "error": "From the given routes warehouse can't send items to all stores."
      }
      ```
+
+3. **Alternative Testing Method:**
+
+   You can either follow the above steps for testing the APIs or run the test suite directly using
+
+    ```bash
+     python test.py
+     ```
+
