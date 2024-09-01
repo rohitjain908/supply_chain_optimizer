@@ -21,7 +21,7 @@ def optimal_cost():
     """Calculate the optimal cost."""
     optimal_cost = optimizer.calculate_optimal_cost()
     if optimal_cost == SupplyChainOptimizer._INF:
-        return jsonify({"error": "From the given routes we can't send items to all stores."}), 400
+        return jsonify({"error": "From the given routes warehouse can't send items to all stores."}), 400
     return jsonify({"optimal_cost": optimal_cost}), 200
 
 if __name__ == '__main__':

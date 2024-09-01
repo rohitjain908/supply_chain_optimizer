@@ -30,12 +30,14 @@ class SupplyChainOptimizer:
 
     def sort_routes_store_by_distance(self) -> None:
         """Sorts the stores for each route by distance in ascending order."""
+
         for route in self.route_store_mapping:
             self.route_store_mapping[route].sort(key=lambda x: x[0])
         logger.info(f"Sorted route store mapping: {self.route_store_mapping}")
 
     def setup_store_routes(self, store_data: StoresResponse) -> None:
         """Sets up the route-to-store mapping based on store data."""
+
         for index, store in enumerate(store_data.warehouses):
             for route in store.availableRoutes:
                 self.route_store_mapping.setdefault(route.routeNumber, []).append((route.distance, index + 1))
@@ -44,6 +46,7 @@ class SupplyChainOptimizer:
 
     def fetch_and_setup_stores_data(self) -> None:
         """Fetches store data from the API and sets up store routes."""
+
         stores_data = self.cache_util.get(self.STORES_DATA_CACHE_KEY)
         if stores_data is not None:
             logger.info("Using cached store data.")
@@ -60,6 +63,7 @@ class SupplyChainOptimizer:
 
     def calculate_costs(self, cost_data: Dict[str, Any]) -> Tuple[float, float]:
         """Calculate fixed and per km costs from cost data."""
+
         base_cost = (
             float(cost_data.get('basicRouteCost', 0)) +
             float(cost_data.get('cost', {}).get('baseCost', 0)) +
@@ -83,6 +87,7 @@ class SupplyChainOptimizer:
 
     def set_route_cost(self, route_number: int, route_cost: RouteCostResponse) -> None:
         """Sets the cost for a specific route based on the provided route cost data."""
+
         cost_data = route_cost.data or {}
         fixed_cost, per_km_cost = self.calculate_costs(cost_data)
 
@@ -95,6 +100,7 @@ class SupplyChainOptimizer:
 
     def fetch_and_set_route_cost(self) -> None:
         """Fetches and sets route costs for all routes."""
+
         for route in self.route_store_mapping.keys():
             route_cost_response = self.cache_util.get(f"route_cost_{route}")
             if route_cost_response is not None:
@@ -147,6 +153,7 @@ class SupplyChainOptimizer:
 
     def calculate_optimal_cost(self) -> float:
         """Calculates the optimal cost for delivering to all stores."""
+        
         optimal_cost = self.recursion(1, 0, {})
         logger.info(f"Calculated optimal cost: {optimal_cost}")
         return optimal_cost
